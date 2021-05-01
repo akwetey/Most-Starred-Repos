@@ -13,7 +13,7 @@
 import { defineComponent } from "vue";
 import Breadcrumb from "@/components/Breadcrumb.vue"; // @ is an alias to /src
 import { BreadcrumbItems } from "@/types";
-
+import TrendingRepoService from "@/services/index";
 export default defineComponent({
   name: "Home",
   components: {
@@ -34,6 +34,15 @@ export default defineComponent({
         },
       ] as BreadcrumbItems[],
     };
+  },
+
+  async created() {
+    try {
+      let res = await TrendingRepoService.index();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   },
 });
 </script>
