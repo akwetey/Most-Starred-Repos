@@ -15,10 +15,6 @@ instance.defaults.baseURL =
 
 instance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const token = process.env.VUE_GITHUB_TOKEN;
-    if (token) {
-      config.headers["Authorization"] = `token ${token}`;
-    }
     config.headers["Content-Type"] = "application/json";
     return config;
   },
