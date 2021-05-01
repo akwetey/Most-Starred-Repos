@@ -22,7 +22,10 @@
               class="badge badge-secondary mr-3 d-flex justify-content-center align-items-center"
               >Issues: {{ item.open_issues_count }}</span
             >
-            <span>30 days by {{ item.owner.login }}</span>
+            <span
+              >Submitted {{ getDaysAgo(item.created_at) }} days by
+              {{ item.owner.login }}</span
+            >
           </div>
         </div>
       </div>
@@ -35,10 +38,16 @@
 import { defineComponent, ref, onMounted } from "vue";
 import { Items } from "@/types";
 import TrendingRepoService from "@/services/index";
+import moment from "moment";
 
-async function fetchRepos(page: number) {
+const numberOfDays: number = 30;
+const getStartDate: string = moment()
+  .subtract(numberOfDays, "days")
+  .format("YYYY-MM-DD");
+
+async function fetchRepos(page: number): Promise<any> {
   try {
-    let { data: res } = await TrendingRepoService.index(page);
+    let { data: res } = await TrendingRepoService.index(getStartDate, page);
     return res.items;
   } catch (error) {
     console.log(error);
@@ -48,6 +57,7 @@ async function fetchRepos(page: number) {
 export default defineComponent({
   name: "TrendingRepo",
   async setup() {
+    //fetch data on window bottom
     onMounted(() => {
       window.addEventListener("scroll", async () => {
         let bottomOfWindow =
@@ -64,8 +74,15 @@ export default defineComponent({
     const items = ref<Items[]>([]);
     const page = ref<number>(1);
     items.value = await fetchRepos(page.value);
+
+    //get days ago
+    const getDaysAgo = (date: string): number => {
+      return moment().diff(moment(date), "days");
+    };
+
     return {
       items,
+      getDaysAgo,
     };
   },
 });

@@ -1,9 +1,9 @@
 /* eslint-disable */
 import axios from "./axios";
 export default {
-  index(page: number) {
+  index(date: string, page: number) {
     return axios.get(
-      `/search/repositories?q=created:<2021-04-01&sort=stars&order=desc&page=${page}`
+      `/search/repositories?q=created:>${date}&sort=stars&order=desc&page=${page}`
     );
   },
 };
