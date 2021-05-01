@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-2">
-          <img :src="item.owner.avatar_url" class="image-fluid resize" />
+          <img :src="item.owner.avatar_url" class="img-fluid" />
         </div>
         <div class="col-md-10">
           <h5>{{ item.name }}</h5>
@@ -82,9 +82,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.resize {
-  width: 150px;
-  height: 150px;
-}
-</style>
