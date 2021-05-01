@@ -1,9 +1,6 @@
 <template>
   <div class="container" style="margin: 70px auto">
     <Breadcrumb :title="title" :breadcrumb="breadcrumb" />
-    <div class="col-md-6 mb-5 pl-0">
-      <input type="search" class="form-control" placeholder="search" />
-    </div>
     <Suspense>
       <template #default>
         <TrendingRepo />

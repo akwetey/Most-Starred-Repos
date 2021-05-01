@@ -1,4 +1,3 @@
-/* eslint-disable */
 <template>
   <div class="card shadow-lg border-0 mt-4" v-for="(item, i) in items" :key="i">
     <div class="card-body">
@@ -33,13 +32,13 @@
 
 <script lang="ts">
 /* eslint-disable */
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { Items } from "@/types";
 import TrendingRepoService from "@/services/index";
 
-async function fetchRepos() {
+async function fetchRepos(page: number) {
   try {
-    let { data: res } = await TrendingRepoService.index();
+    let { data: res } = await TrendingRepoService.index(page);
     return res.items;
   } catch (error) {
     console.log(error);
@@ -49,9 +48,22 @@ async function fetchRepos() {
 export default defineComponent({
   name: "TrendingRepo",
   async setup() {
-    const items = ref<Items[]>([]);
-    items.value = await fetchRepos();
+    onMounted(() => {
+      window.addEventListener("scroll", async () => {
+        let bottomOfWindow =
+          document.documentElement.scrollTop +
+            document.documentElement.clientHeight >=
+          document.documentElement.scrollHeight;
+        if (bottomOfWindow) {
+          const data = await fetchRepos((page.value = page.value + 1));
+          items.value = [...items.value, ...data];
+        }
+      });
+    });
 
+    const items = ref<Items[]>([]);
+    const page = ref<number>(1);
+    items.value = await fetchRepos(page.value);
     return {
       items,
     };
