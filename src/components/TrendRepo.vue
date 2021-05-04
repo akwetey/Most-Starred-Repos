@@ -39,13 +39,13 @@ const getStartDate: string = moment()
   .subtract(numberOfDays, "days")
   .format("YYYY-MM-DD");
 
-// eslint-disable-next-line
-async function fetchRepos(page: number): Promise<any> {
+async function fetchRepos(page: number): Promise<Items[]> {
   try {
     let { data: res } = await TrendingRepoService.index(getStartDate, page);
     return res.items;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
