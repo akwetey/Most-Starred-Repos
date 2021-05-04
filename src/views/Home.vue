@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Breadcrumb from "@/components/Breadcrumb.vue"; // @ is an alias to /src
-import TrendingRepo from "@/components/TrendingRepo.vue"; // @ is an alias to /src
+import TrendingRepo from "@/components/TrendRepo.vue"; // @ is an alias to /src
 import { BreadcrumbItems } from "@/types";
 export default defineComponent({
   name: "Home",

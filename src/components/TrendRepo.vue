@@ -17,8 +17,8 @@
               class="badge badge-secondary mr-3 d-flex justify-content-center align-items-center"
               >Issues: {{ item.open_issues_count }}</span
             >
-            <span
-              >Submitted {{ getDaysAgo(item.created_at) }} days by
+            <span>
+              Submitted {{ getDaysAgo(item.created_at) }} days by
               {{ item.owner.login }}</span
             >
           </div>
@@ -29,17 +29,17 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable */
 import { defineComponent, ref, onMounted } from "vue";
 import { Items } from "@/types";
 import TrendingRepoService from "@/services/index";
 import moment from "moment";
 
-const numberOfDays: number = 30;
+const numberOfDays = 30;
 const getStartDate: string = moment()
   .subtract(numberOfDays, "days")
   .format("YYYY-MM-DD");
 
+// eslint-disable-next-line
 async function fetchRepos(page: number): Promise<any> {
   try {
     let { data: res } = await TrendingRepoService.index(getStartDate, page);
